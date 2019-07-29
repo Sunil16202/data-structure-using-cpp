@@ -1,0 +1,44 @@
+#include <iostream>
+#include <string>
+#include "solution.h"
+using namespace std;
+
+int main(){
+    int num;
+    cin >> num;
+
+    printKeypad(num);
+
+    return 0;
+}
+
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+string map[]={"","", "abc", "def","ghi", "jkl","mno", "pqrs","tuv","wxyz"};
+
+void printOutput(int num , string output){
+    if(num==0){
+        cout<<output<<endl;
+        return;
+    }
+    int rem = num%10;
+    num=num/10;
+    printOutput(num,map[rem][0]+output);
+    printOutput(num,map[rem][1]+output);
+    printOutput(num,map[rem][2]+output);
+    if(map[rem].length()==4){
+        printOutput(num,map[rem][3]+output);
+    }
+}
+
+
+void printKeypad(int num){
+    /*
+    Given an integer number print all the possible combinations of the keypad. You do not need to return anything just print them.
+    */
+    string output="";
+    printOutput(num, output);
+}
