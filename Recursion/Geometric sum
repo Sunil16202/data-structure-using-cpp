@@ -1,0 +1,26 @@
+#include <iostream>
+#include <math.h>
+#include <iomanip>
+#include "solution.h"
+using namespace std;
+
+int main() {
+    int k;
+    cin >> k;
+    cout << fixed << setprecision(5);
+    cout << geometricSum(k) << endl;   
+}
+double geometricSum(int k) {
+    // Write your code here
+    
+    if(k==0){
+        return 1;
+    }
+    
+    double ans = pow(0.5,k);
+    
+    return (ans + geometricSum(k-1));
+
+}
+
+
