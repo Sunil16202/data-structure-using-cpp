@@ -1,0 +1,45 @@
+#include <iostream>
+#include <string>
+#include "solution.h"
+using namespace std;
+
+int main(){
+    string input;
+    cin >> input;
+    string output[10000];
+    int count = returnPermutations(input, output);
+    for(int i = 0; i < count && i < 10000; i++){
+        cout << output[i] << endl;
+    }
+    return 0;
+}
+
+
+#include <string>
+using namespace std;
+
+int returnPermutations(string input, string output[]){
+   	/* Don't write main() function.
+	 * Don't read input, it is passed as function argument.
+	 * Print output as specified in the question
+	*/
+    
+    if(input.length()==0){
+        output[0]={""};
+        return 1;
+    }
+    
+    char x = input[0];
+    string newout[1000];
+    int y = returnPermutations(input.substr(1),newout);
+    
+    int k=0;
+    for(int j=0;j<y;j++){
+        string current = newout[j];
+        for(int i=0;i<=current.length();i++){
+            output[k]=current.substr(0,i)+x+current.substr(i);
+            k++;
+        }
+    }
+    return k;
+}
