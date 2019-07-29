@@ -1,0 +1,55 @@
+#include <iostream>
+#include <string>
+#include "solution.h"
+using namespace std;
+
+int main(){
+    int num;
+    cin >> num;
+
+    string output[10000];
+    int count = keypad(num, output);
+    for(int i = 0; i < count && i < 10000; i++){
+        cout << output[i] << endl;
+    }
+    return 0;
+}
+
+
+#include <string>
+using namespace std;
+
+const string map[]={" ", "","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+
+int keypad(int num, string output[]){
+    /* Insert all the possible combinations of the integer number into the output string array. You do not need to
+    print anything, just return the number of strings inserted into the array.
+    */
+    
+    if( num <2){
+        output[0]="";
+        return 1;
+    }
+    
+    int rem= num%10;
+    num = num/10;
+    int smallOutputSize=keypad(num , output);
+    
+    // make a size-1 copies 
+    for(int k = 1; k <= map[rem].size() - 1; k++){
+ 		for(int i = 0; i < smallOutputSize; i++)
+ 			output[(smallOutputSize*k) + i] = output[i];
+ 	}
+    
+    // add the charcter in output
+    
+   int copies = map[rem].size();
+ 	for(int k = 0; k < copies; k++){
+ 		for(int i = 0; i < smallOutputSize; i++)
+ 			output[(smallOutputSize*k) + i] += map[rem][k];
+    }
+    
+    return copies*smallOutputSize;
+    
+    
+}
