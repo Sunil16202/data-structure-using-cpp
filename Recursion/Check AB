@@ -1,0 +1,71 @@
+#include <iostream>
+#include "solution.h"
+using namespace std;
+
+int main() {
+    char input[100];
+    bool ans;
+    cin >> input;
+    ans=checkAB(input);
+    if(ans)
+        cout<< "true" << endl;
+    else
+        cout<< "false" << endl;
+}
+
+
+
+bool checkAB(char input[]) {
+	// Write your code here
+    int n =0;
+    for(;input[n]!='\0';n++);
+    bool smallAns = false;
+    if(n== 0){
+        return true;
+    }
+    
+    if(n==1){
+        if(input[0]=='a'){
+            smallAns = true;
+            int i=0;
+            for(;i<n;i++){
+                input[i]=input[i+1];
+            }
+            input[i]='\0';
+            
+        }
+    }
+    else if( n==2){
+        if(input[0] == 'a' && input[1]=='a'){
+            smallAns = true;
+            int i=0;
+            for(;i<n;i++){
+                input[i]=input[i+2];
+            }
+            input[i]='\0';
+        }
+    }
+    else if(n >= 3){
+        
+        if( input[0] == 'a' && input[1]=='b'&& input[2]=='b'){
+            smallAns = true;
+            int i=0;
+            for(;i<n;i++){
+                input[i]=input[i+3];
+            }
+            input[i]='\0';
+        }
+        else if( input[0]=='a' && input[1]=='a'){
+            smallAns = true;
+            int i=0;
+            for(;i<n;i++){
+                input[i]=input[i+1];
+            }
+            input[i]='\0';
+        }
+    }
+    return smallAns && checkAB(input);
+}
+
+
+
