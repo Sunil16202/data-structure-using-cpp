@@ -1,0 +1,40 @@
+#include <iostream>
+#include <string>
+#include "solution.h"
+using namespace std;
+
+int main(){
+    string input;
+    cin >> input;
+    printPermutations(input);
+    return 0;
+}
+#include <iostream>
+#include <string>
+using namespace std;
+
+void helper(string input, int start, int end){
+    int i;
+    if(start == end){
+        cout<<input<<endl;
+    }
+    else{
+        for(i=start;i<=end;i++){
+            swap((input[start]), (input[i]));
+            helper(input,start+1,end);
+            swap((input[start]),(input[i]));
+        }
+    }
+}
+
+
+
+void printPermutations(string input){
+
+    	/* Don't write main() function.
+	 * Don't read input, it is passed as function argument.
+	 * Print output as specified in the question
+	*/
+    int start=0, end =input.length();
+    helper (input,start,end-1);
+}
