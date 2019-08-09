@@ -1,0 +1,61 @@
+#include <iostream>
+using namespace std;
+#include "solution.h"
+
+int main() {
+    char input[10000];
+    cin >> input;
+    cout << countBracketReversals(input) << endl;
+}
+
+
+#include<stack>
+
+int countBracketReversals(char input[]){
+	// Write your code here
+    stack<char> st;
+    
+    int c=0;
+    int n=0;
+    char c1,c2;
+    for(; input[n] !='\0';n++);
+    if( n%2 != 0){
+        return -1;
+    }
+    
+    for(int i=0;i<n;i++){
+        if(input[i] == '{'){
+            st.push(input[i]);
+            
+        }
+        else if( input[i]=='}'  && !st.empty()  && st.top()=='{'){
+            st.pop();
+    
+        }
+        else if(st.empty() && input[i]=='}'){
+            st.push(input[i]);
+        }
+        else if( !st.empty() && st.top() == '{' ){
+            st.pop();
+        }
+        else if( !st.empty() && st.top() == '}'){
+            st.push(input[i]);
+        }
+    }
+    
+    while(!st.empty()){
+        c1= st.top();
+        st.pop();
+        c2=st.top();
+        st.pop();
+        if(c1 ==c2){
+            c++;
+        }
+        if(c1 != c2){
+            c =c+2;
+        }
+    }
+    
+    return c;
+
+}
