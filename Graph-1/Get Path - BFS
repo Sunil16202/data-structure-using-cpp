@@ -1,0 +1,97 @@
+Given an undirected graph G(V, E) and two vertices v1 and v2(as integers), find and print the path from v1 to v2 (if exists). Print nothing if there is no path between v1 and v2.
+Find the path using BFS and print the shortest path available.
+V is the number of vertices present in graph G and vertices are numbered from 0 to V-1.
+E is the number of edges present in graph G.
+Print the path in reverse order. That is, print v2 first, then intermediate vertices and v1 at last.
+Note : Save the input graph in Adjacency Matrix.
+Input Format :
+Line 1: Two Integers V and E (separated by space)
+Next E lines : Two integers a and b, denoting that there exists an edge between vertex a and vertex b (separated by space)
+Line (E+2) : Two integers v1 and v2 (separated by space)
+Output Format :
+Path from v1 to v2 in reverse order (separated by space)
+Constraints :
+2 <= V <= 1000
+1 <= E <= 1000
+0 <= v1, v2 <= V-1
+Sample Input 1 :
+4 4
+0 1
+0 3
+1 2
+2 3
+1 3
+Sample Output 1 :
+3 0 1
+Sample Input 2 :
+6 3
+5 3
+0 1
+3 4
+0 3
+Sample Output 2 :
+
+#include <iostream>
+#include<vector>
+#include<queue>
+#include<unordered_map>
+using namespace std;
+
+bool  GP_BFS(int** adjMatrix, int currentVertex, int v, int v1,int v2,vector<int>*vec){
+  
+  bool* visited = new bool[v](); // all initialised with false
+    queue<int>q;
+  unordered_map<int,int> m;
+  q.push(currentVertex);//source
+  visited[currentVertex]=true;
+  while(!q.empty()  && q.front()!=v2){
+    
+	for(int i = v-1; i >= 0; i--){
+      
+		// check if i is neighbor of currentVertex && i isn't visited
+		if(adjMatrix[q.front()][i] &&  !visited[i]){
+          //push neighbours
+          q.push(i);
+          m[i]=q.front();
+          visited[i]=true;
+		}
+  }
+    q.pop();
+}
+  
+  if(q.front()==v2){
+    int current=q.front();
+    while(current!=v1){
+    	vec->push_back(current);
+      	current=m[current];
+  	}
+    vec->push_back(v1);
+ }
+  
+}
+int main(){
+	int v, e;
+	cin >> v >> e;
+	int** adjMatrix = new int*[v];
+	for(int i = 0; i < v; i++){
+		adjMatrix[i] = new int[v]();
+	}
+
+	for(int i = 0; i < e; i++){
+		int v1, v2;
+		cin >> v1 >> v2;
+		adjMatrix[v1][v2] = 1;
+		adjMatrix[v2][v1] = 1;
+	}
+  	int a,b;
+ 	cin>>a>>b;
+  	//bool* visited = new bool[v]();
+  vector<int>*vec=new vector<int>();
+	GP_BFS(adjMatrix, a, v, a, b,vec);
+  //if(vec->front()==b){
+  for(int i=0;i<vec->size();i++){
+    cout<<vec->at(i)<<" ";
+  }
+  //}
+	return 0;
+}
