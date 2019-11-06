@@ -1,0 +1,63 @@
+Gary has two string S and V. Now Gary wants to know the length shortest subsequence in S such that it is not a subsequence in V.
+Note: input data will be such so there will always be a solution.
+Input Format :
+Line 1 : String S of length N (1 <= N <= 1000)
+Line 2 : String V of length M (1 <= M <= 1000)
+Output Format :
+Length of shortest subsequence in S such that it is not a subsequence in V
+Sample Input :
+babab
+babba
+Sample Output :
+3
+
+using namespace std;
+#include "solution.h"
+int main()
+{
+	string S,V;
+	cin>>S>>V;
+	cout<<solve(S,V)<<endl;
+	return 0;
+}
+
+#include<string>
+#define MAX_INT 1005
+using namespace std;
+int solve(string S,string V){
+
+    int m=S.size();
+    int n=V.size();
+    int output[m+1][n+1];
+    // if V is empty 
+    for (int i =0;i<=m;i++){
+        output[i][0]=1;
+    }
+    // if S is empty
+    for(int i=0;i<=n;i++){
+        output[0][i]=MAX_INT;
+    }
+    
+    for(int i =1;i<=m;i++){
+        for(int j=1;j<=n;j++){
+            char c = S[i-1];
+            int k;
+            for(k=j-1;k>=0;k--){
+                if(V[k]==c)
+                    break;
+            }
+            if(k==-1){
+                output[i][j]=1;
+            }
+            else{
+                output[i][j]=min(output[i-1][j],output[i-1][k]+1);
+            }
+        }
+    }
+    int ans = output[m][n];
+    if(ans>MAX_INT){
+        return -1;
+    }
+   return ans;
+} 
+        
