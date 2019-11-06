@@ -63,27 +63,17 @@ int main() {
 // input2 - second array
 // size1 - size of first array
 // size2 - size of second array
-#include<unordered_map>
-using namespace std;
-int lengthOfLongestSubsetWithZeroSum(int* arr, int size){
-  
-  // Write your code here
+#include<bits/stdc++.h>
+void intersection(int *input1,int *input2, int size1, int size2){
+	map<int,int> mapp;
+	
+	for(int i=0;i<size1;i++)
+		mapp[input1[i]]++;
 
-    int maxLenght =0;
-    int sum=0;
-    unordered_map<int,int> sub;
-    for(int i=0;i<size;i++){
-        sum +=arr[i];
-        if(sum ==0 && maxLenght == 0)
-            maxLenght =1;
-        if(sum ==0)
-            maxLenght = i+1;
-        if(sub.find(sum) != sub.end())
-            maxLenght = max(maxLenght, i-sub[sum]);
-        else
-            sub[sum]=i;
-    }
-    return maxLenght;
+	for(int i=0; i<size2; i++){
+		if(mapp[input2[i]]>0){
+			mapp[input2[i]]--;
+			cout<<input2[i]<<endl;
+		}
+	}
 }
-
-
