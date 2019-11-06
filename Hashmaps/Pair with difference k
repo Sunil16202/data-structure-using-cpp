@@ -1,0 +1,100 @@
+You are given with an array of integers and an integer K. Write a program to find and print all pairs which have difference K.
+Best solution takes O(n) time. And take difference as absolute.
+Input Format :
+Line 1 : Integer n, Size of array
+Line 2 : Array elements (separated by space)
+Line 3 : K
+Output format :
+Print pairs in different lines (pair elements separated by space). In a pair, smaller element should be printed first.
+(Order of different pairs is not important)
+Constraints :
+1 <= n <= 5000
+Sample Input 1 :
+4 
+5 1 2 4
+3
+Sample Output 1 :
+2 5
+1 4
+Sample Input 2 :
+4
+4 4 4 4 
+0
+Sample Output 2 :
+4 4
+4 4
+4 4
+4 4
+4 4
+4 4
+
+
+#include<iostream>
+using namespace std;
+#include "solution.h"
+
+int main() {
+	int n;
+	cin >> n;
+	int *input = new int[n];
+	for(int i = 0; i < n; i++){
+		cin >> input[i];
+	}
+	int k;
+	cin >> k;
+	printPairs(input, n, k);
+}
+#include<unordered_map>
+void printPairs(int *input, int n, int k) {
+	// Write your code here
+    
+    unordered_map<int,int> m;
+    
+    for(int i=0;i<n;i++)
+    {
+        m[input[i]]++;
+    }
+    
+    
+    for(int i=0;i<n;i++)
+    {
+        if(m[input[i]]>0)
+        {
+            int n1=input[i]-k;
+            int n2=k+input[i];
+            
+            if(n1==n2)
+            {
+                int s=((m[n1]-1)*m[n1])/2;
+                for(int i=0;i<s;i++)
+                    cout<<n1<<" "<<n1<<endl;
+                m[input[i]]=0;
+                continue;
+            }
+            
+            if(m[n1]>0)
+            {
+                for(int j=0;j<m[input[i]]*m[n1];j++)
+                {
+                    if(n1>input[i])
+                        cout<<input[i]<<" "<<n1<<endl;
+                    else
+                        cout<<n1<<" "<<input[i]<<endl;
+                }
+            }
+
+            if(m[n2]>0)
+            {
+                for(int j=0;j<m[input[i]]*m[n2];j++)
+                {
+                    if(n2>input[i])
+                        cout<<input[i]<<" "<<n2<<endl;
+                    else
+                        cout<<n2<<" "<<input[i]<<endl;
+                }
+            }
+            
+            m[input[i]]=0;
+        }
+    }
+}
